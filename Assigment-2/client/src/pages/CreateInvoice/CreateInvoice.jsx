@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { createInvoice } from '../../services/api';
+import './CreateInvoice.scss';
 
 const CreateInvoice = ({ onAddInvoice }) => {
   const navigate = useNavigate();

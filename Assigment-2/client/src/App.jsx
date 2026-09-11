@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Invoices from './pages/Invoices/Invoices';
 import InvoiceDetails from './pages/InvoiceDetails/InvoiceDetails';
 import CreateInvoice from './pages/CreateInvoice/CreateInvoice';
-import './index.css';
+import './App.scss';
  
 function App() {
   const [invoices, setInvoices] = useState(initialInvoices);

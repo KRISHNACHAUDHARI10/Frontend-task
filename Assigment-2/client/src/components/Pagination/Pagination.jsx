@@ -1,4 +1,5 @@
 import React from 'react';
+import './Pagination.scss';
 
 const Pagination = ({ currentPage, totalPages, onPageChange, totalItems, itemsPerPage = 7 }) => {
   const startRange = totalItems === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;

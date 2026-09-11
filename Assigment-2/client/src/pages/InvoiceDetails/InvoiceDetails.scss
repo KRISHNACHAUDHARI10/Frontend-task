@@ -1,0 +1,19 @@
+.invoice-card {
+  padding: 30px;
+}
+
+@media print {
+  .navbar,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  .main-content {
+    padding: 0 !important;
+  }
+
+  .invoice-card {
+    border: none !important;
+  }
+}

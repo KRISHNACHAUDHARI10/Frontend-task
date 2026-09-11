@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '../../assets/invoice-logo.jpg';
+import './Navbar.scss';
 
 const Navbar = ({ role, setRole }) => {
   return (

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import './Sidebar.scss';
 import GridViewIcon from '@mui/icons-material/GridView';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 

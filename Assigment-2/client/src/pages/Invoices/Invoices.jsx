@@ -7,38 +7,24 @@ import InvoiceTable from '../../components/InvoiceTable/InvoiceTable';
 import Pagination from '../../components/Pagination/Pagination';
 import EditInvoiceModal from '../../components/EditInvoiceModal/EditInvoiceModal';
 import { updateInvoice, deleteInvoice } from '../../services/api';
+import './Invoices.scss';
 
 // Helper to reliably parse date strings into Date objects
 const parseDate = (dateStr) => {
   if (!dateStr) return null;
-  if (typeof dateStr !== 'string') {
-    const d = new Date(dateStr);
-    return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const d = new Date(dateStr);
+  if (!isNaN(d.getTime())) {
+    return new Date(d.getFullYear(), d.getMonth(), d.getDate());
   }
-
-  const str = dateStr.trim();
-  if (!str) return null;
-
-  // Pattern 1: YYYY-MM-DD or YYYY/MM/DD (HTML date picker standard)
-  if (/^\d{4}[-/]\d{1,2}[-/]\d{1,2}/.test(str)) {
-    const parts = str.split(/[-/T]/);
-    const y = parseInt(parts[0], 10);
-    const m = parseInt(parts[1], 10) - 1;
-    const d = parseInt(parts[2], 10);
-    return new Date(y, m, d);
+  const parts = dateStr.split(/[-/]/);
+  if (parts.length === 3) {
+    if (parts[0].length === 4) {
+      return new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    } else {
+      return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+    }
   }
-
-  // Pattern 2: DD-MM-YYYY or DD/MM/YYYY (Indian/European standard)
-  if (/^\d{1,2}[-/]\d{1,2}[-/]\d{4}/.test(str)) {
-    const parts = str.split(/[-/]/);
-    const d = parseInt(parts[0], 10);
-    const m = parseInt(parts[1], 10) - 1;
-    const y = parseInt(parts[2], 10);
-    return new Date(y, m, d);
-  }
-
-  const d = new Date(str);
-  return isNaN(d.getTime()) ? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  return null;
 };
 
 const Invoices = ({ invoices, setInvoices, role }) => {
@@ -52,7 +38,7 @@ const Invoices = ({ invoices, setInvoices, role }) => {
   const [sortField, setSortField] = useState('date');
   const [sortOrder, setSortOrder] = useState('desc');
 
-  // Pagination (Show 7 invoices per page)
+  // Pagination 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
@@ -88,36 +74,22 @@ const Invoices = ({ invoices, setInvoices, role }) => {
 
   // 1. Filter logic
   let filtered = invoices.filter((inv) => {
-    const searchLower = search.trim().toLowerCase();
-    
-    // Format invoice date in multiple formats for search bar matching
-    const invDateObj = parseDate(inv.date);
-    let dateStrFormats = inv.date || '';
-    if (invDateObj) {
-      const yyyy = invDateObj.getFullYear();
-      const mm = String(invDateObj.getMonth() + 1).padStart(2, '0');
-      const dd = String(invDateObj.getDate()).padStart(2, '0');
-      dateStrFormats = `${yyyy}-${mm}-${dd} ${dd}-${mm}-${yyyy} ${dd}/${mm}/${yyyy}`;
-    }
-
     const matchSearch =
-      !searchLower ||
-      inv.clientName.toLowerCase().includes(searchLower) ||
-      inv.id.toLowerCase().includes(searchLower) ||
-      dateStrFormats.toLowerCase().includes(searchLower);
+      inv.clientName.toLowerCase().includes(search.toLowerCase()) ||
+      inv.id.toLowerCase().includes(search.toLowerCase());
 
     const matchStatus = status === 'All' || inv.status === status;
 
     let matchDate = true;
+    const invDateObj = parseDate(inv.date);
     if (invDateObj) {
-      if (startDate) {
-        const startObj = parseDate(startDate);
-        if (startObj && invDateObj < startObj) matchDate = false;
-      }
-      if (endDate) {
-        const endObj = parseDate(endDate);
-        if (endObj && invDateObj > endObj) matchDate = false;
-      }
+      const startObj = startDate ? parseDate(startDate) : null;
+      const endObj = endDate ? parseDate(endDate) : null;
+
+      const afterStart = !startObj || invDateObj >= startObj;
+      const beforeEnd = !endObj || invDateObj <= endObj;
+
+      matchDate = afterStart && beforeEnd;
     }
 
     return matchSearch && matchStatus && matchDate;
@@ -165,7 +137,6 @@ const Invoices = ({ invoices, setInvoices, role }) => {
 
     }
   };
-
   // Actions with Database Persistence & Toast Feedback
   const handleUpdateStatus = async (id, newStatus) => {
     try {
@@ -178,9 +149,7 @@ const Invoices = ({ invoices, setInvoices, role }) => {
       toast.error(err.message || 'Failed to update status');
     }
   };
-
   const handleMarkPaid = (id) => handleUpdateStatus(id, 'Paid');
-
   const handleDelete = async (id) => {
     if (!window.confirm(`Are you sure you want to delete invoice ${id} from the database?`)) {
       return;
@@ -195,7 +164,6 @@ const Invoices = ({ invoices, setInvoices, role }) => {
     }
 
   };
-
   const handleSaveEdit = async (id, updatedData) => {
     try {
       const res = await updateInvoice(id, updatedData);
@@ -208,8 +176,6 @@ const Invoices = ({ invoices, setInvoices, role }) => {
       toast.error(err.message || 'Failed to update invoice');
     }
   };
-
-
   const handleBulkDelete = async () => {
     if (!window.confirm(`Are you sure you want to delete ${selectedIds.length} invoices from the database?`)) {
       return;
@@ -279,7 +245,7 @@ const Invoices = ({ invoices, setInvoices, role }) => {
           </button>
         </div>
       </div>
-
+      
       <InvoiceFilters
         search={search}
         setSearch={setSearch}
@@ -291,7 +257,7 @@ const Invoices = ({ invoices, setInvoices, role }) => {
         setEndDate={setEndDate}
         onReset={handleReset}
       />
-
+      
       {/* Bulk action bar */}
       {selectedIds.length > 0 && (
         <div className="bulk-bar">
@@ -330,14 +296,15 @@ const Invoices = ({ invoices, setInvoices, role }) => {
           totalItems={filtered.length}
         />
       </div>
-
       {/* Update Invoice Modal */}
+      
       <EditInvoiceModal
         invoice={editingInvoice}
         isOpen={Boolean(editingInvoice)}
         onClose={() => setEditingInvoice(null)}
         onSave={handleSaveEdit}
       />
+
     </div>
   );
 };

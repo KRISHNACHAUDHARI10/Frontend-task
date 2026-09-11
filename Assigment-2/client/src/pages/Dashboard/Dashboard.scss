@@ -1,0 +1,39 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  border-radius: 8px;
+  padding: 16px;
+  border: none;
+  color: #ffffff;
+
+  h4 {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  h2 {
+    font-size: 1.6rem;
+    margin-top: 6px;
+    color: #ffffff;
+  }
+}
+
+.total-card {
+  background: #6366f1;
+}
+
+.paid-card {
+  background: #10b981;
+}
+
+.pending-card {
+  background: #f59e0b;
+}
+
+.overdue-card {
+  background: #ef4444;
+}

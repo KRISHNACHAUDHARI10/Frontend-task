@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import './EditInvoiceModal.scss';
 
 const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
   const [clientName, setClientName] = useState('');

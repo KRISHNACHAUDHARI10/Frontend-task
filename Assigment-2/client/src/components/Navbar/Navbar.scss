@@ -1,0 +1,55 @@
+.navbar {
+  height: 60px;
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  h2 {
+    font-size: 1.15rem;
+    color: #ffffff;
+    font-weight: 700;
+  }
+}
+
+.navbar-logo {
+  height: 44px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 3px 6px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.role-toggle-btn {
+  padding: 5px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+  }
+}

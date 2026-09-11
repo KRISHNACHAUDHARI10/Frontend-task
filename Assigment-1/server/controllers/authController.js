@@ -31,8 +31,7 @@ const login = async (req, res) => {
 
     const lower = cleanUsername.toLowerCase();
 
-    // STRICT VALIDATION: Only User A and User B are valid users
-    // If any user types 'c', 'wekfjbfew', or any other word, return 401
+    
     let role = null;
     let standardName = cleanUsername;
 

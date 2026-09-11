@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PrintIcon from '@mui/icons-material/Print';
+import './InvoiceTable.scss';
 
 const InvoiceTable = ({
   invoices,
