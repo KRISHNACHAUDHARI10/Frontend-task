@@ -20,13 +20,44 @@ const CreateInvoice = ({ onAddInvoice }) => {
     { name: '', qty: 1, price: '' },
   ]);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({ clientName: '', items: [] });
 
-  // Auto-calculated total price from line items
+  // Auto-calculated total price
   const totalAmount = items.reduce((sum, item) => {
     const qty = Number(item.qty) || 0;
     const price = Number(item.price) || 0;
     return sum + qty * price;
   }, 0);
+
+  const validateForm = () => {
+    const nextErrors = { clientName: '', items: [] };
+    let isValid = true;
+
+    if (!clientName.trim()) {
+      nextErrors.clientName = 'Client name is required';
+      isValid = false;
+    }
+
+    items.forEach((item) => {
+      const itemErrors = { name: '', qty: '', price: '' };
+      if (!String(item.name || '').trim()) {
+        itemErrors.name = 'Item name is required';
+        isValid = false;
+      }
+      if (item.qty === '' || item.qty === null || Number(item.qty) < 1) {
+        itemErrors.qty = 'Qty is required';
+        isValid = false;
+      }
+      if (item.price === '' || item.price === null || Number(item.price) <= 0) {
+        itemErrors.price = 'Price is required';
+        isValid = false;
+      }
+      nextErrors.items.push(itemErrors);
+    });
+
+    setErrors(nextErrors);
+    return isValid;
+  };
 
   const handleItemChange = (index, field, value) => {
     setItems((prev) => {
@@ -34,25 +65,35 @@ const CreateInvoice = ({ onAddInvoice }) => {
       next[index] = { ...next[index], [field]: value };
       return next;
     });
+    setErrors((prev) => {
+      const nextItems = [...(prev.items || [])];
+      if (nextItems[index]) {
+        nextItems[index] = { ...nextItems[index], [field]: '' };
+      }
+      return { ...prev, items: nextItems };
+    });
   };
 
   const handleAddItem = () => {
     setItems((prev) => [...prev, { name: '', qty: 1, price: '' }]);
+    setErrors((prev) => ({
+      ...prev,
+      items: [...(prev.items || []), { name: '', qty: '', price: '' }],
+    }));
   };
 
   const handleRemoveItem = (index) => {
     if (items.length <= 1) return;
     setItems((prev) => prev.filter((_, i) => i !== index));
+    setErrors((prev) => ({
+      ...prev,
+      items: (prev.items || []).filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!clientName.trim()) return;
-
-    if (totalAmount <= 0) {
-      alert('Please add at least one item with a valid price and quantity.');
-      return;
-    }
+    if (!validateForm()) return;
 
     setLoading(true);
     const sanitizedItems = items.map((item) => ({
@@ -132,11 +173,17 @@ const CreateInvoice = ({ onAddInvoice }) => {
               <label>Client Name *</label>
               <input
                 type="text"
-                required
                 placeholder="e.g. Ramesh Patel"
                 value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
+                className={errors.clientName ? 'input-error' : ''}
+                onChange={(e) => {
+                  setClientName(e.target.value);
+                  if (errors.clientName) {
+                    setErrors((prev) => ({ ...prev, clientName: '' }));
+                  }
+                }}
               />
+              {errors.clientName && <span className="field-error">{errors.clientName}</span>}
             </div>
 
             <div className="filter-group">
@@ -182,7 +229,7 @@ const CreateInvoice = ({ onAddInvoice }) => {
 
           <hr style={{ borderColor: '#e2e8f0', margin: '4px 0' }} />
 
-          {/* Dynamic Line Items Section */}
+          {/* Dynamic Items*/}
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
               <div>
@@ -202,6 +249,7 @@ const CreateInvoice = ({ onAddInvoice }) => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {items.map((item, idx) => {
                 const rowTotal = (Number(item.qty) || 0) * (Number(item.price) || 0);
+                const itemErrors = errors.items[idx] || {};
                 return (
                   <div
                     key={idx}
@@ -209,7 +257,7 @@ const CreateInvoice = ({ onAddInvoice }) => {
                       display: 'grid',
                       gridTemplateColumns: '2.5fr 1fr 1.3fr 1fr 40px',
                       gap: '10px',
-                      alignItems: 'end',
+                      alignItems: 'start',
                       background: '#f8fafc',
                       padding: '12px',
                       borderRadius: '6px',
@@ -220,35 +268,38 @@ const CreateInvoice = ({ onAddInvoice }) => {
                       <label style={{ fontSize: '0.78rem' }}>Item Description / Name *</label>
                       <input
                         type="text"
-                        required
                         placeholder="e.g. wafar or Website Design"
                         value={item.name}
+                        className={itemErrors.name ? 'input-error' : ''}
                         onChange={(e) => handleItemChange(idx, 'name', e.target.value)}
                       />
+                      {itemErrors.name && <span className="field-error">{itemErrors.name}</span>}
                     </div>
 
                     <div className="filter-group">
                       <label style={{ fontSize: '0.78rem' }}>Qty *</label>
                       <input
                         type="number"
-                        required
                         min="1"
                         placeholder="1"
                         value={item.qty}
+                        className={itemErrors.qty ? 'input-error' : ''}
                         onChange={(e) => handleItemChange(idx, 'qty', e.target.value)}
                       />
+                      {itemErrors.qty && <span className="field-error">{itemErrors.qty}</span>}
                     </div>
 
                     <div className="filter-group">
                       <label style={{ fontSize: '0.78rem' }}>Price (₹) *</label>
                       <input
                         type="number"
-                        required
                         min="0"
                         placeholder="e.g. 50000"
                         value={item.price}
+                        className={itemErrors.price ? 'input-error' : ''}
                         onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
                       />
+                      {itemErrors.price && <span className="field-error">{itemErrors.price}</span>}
                     </div>
 
                     <div className="filter-group">
@@ -272,7 +323,7 @@ const CreateInvoice = ({ onAddInvoice }) => {
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'center', paddingBottom: '2px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: '22px' }}>
                       <button
                         type="button"
                         onClick={() => handleRemoveItem(idx)}
@@ -326,7 +377,7 @@ const CreateInvoice = ({ onAddInvoice }) => {
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={loading || totalAmount <= 0}
+              disabled={loading}
               style={{ minWidth: '170px' }}
             >
               {loading ? 'Creating...' : 'Save & Create Invoice'}

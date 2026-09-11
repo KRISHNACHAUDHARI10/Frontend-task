@@ -119,10 +119,8 @@ const getNextInvoiceId = async () => {
       if (!isNaN(num) && num > maxNum) maxNum = num;
     }
   });
-
   let candidateNum = maxNum + 1;
   let candidateId = `INV-${candidateNum}`;
-
   if (getIsConnected()) {
     try {
       while (await Invoice.exists({ id: candidateId })) {
@@ -133,15 +131,12 @@ const getNextInvoiceId = async () => {
       console.warn('Error checking candidate ID existence:', err.message);
     }
   }
-
   return candidateId;
 };
-
 // 1. READ
 const getInvoices = async (req, res) => {
   try {
     await seedInvoicesIfEmpty();
-
     if (getIsConnected()) {
       const dbInvoices = await Invoice.find().sort({ createdAt: -1 });
       if (dbInvoices && dbInvoices.length > 0) {
@@ -150,43 +145,36 @@ const getInvoices = async (req, res) => {
         return res.json(parsed);
       }
     }
-
     return res.json(invoicesCache);
   } catch (error) {
     return res.json(invoicesCache);
   }
 };
-
 // 2. READ ONE:
 const getInvoiceById = async (req, res) => {
   try {
     const { id } = req.params;
-
     if (getIsConnected()) {
       const invoice = await Invoice.findOne({ id });
       if (invoice) return res.json(invoice);
     }
-
     const found = invoicesCache.find((inv) => inv.id === id);
     if (!found) {
       return res.status(404).json({ message: 'Invoice not found' });
     }
-
     return res.json(found);
   } catch (error) {
     return res.status(500).json({ message: 'Error retrieving invoice', error: error.message });
   }
 };
-
 // 3. CREATE
 const createInvoice = async (req, res) => {
   try {
     const { clientName, clientEmail, date, dueDate, status, amount, items } = req.body;
-
-    if (!clientName || amount === undefined || amount === null) {
+    // this is validation for the client 
+   if (!clientName || amount === undefined || amount === null) {
       return res.status(400).json({ message: 'Client name and amount are required' });
-    }
-
+    }  
     let newId = req.body.id;
     if (!newId || (getIsConnected() && (await Invoice.exists({ id: newId })))) {
       newId = await getNextInvoiceId();
@@ -202,7 +190,7 @@ const createInvoice = async (req, res) => {
       amount: Number(amount) || 0,
       items: items && items.length > 0 ? items : [{ name: 'Service', qty: 1, price: Number(amount) || 0 }],
     };
-
+  
     if (getIsConnected()) {
       try {
         const createdDoc = await Invoice.create(newInvoice);
@@ -246,6 +234,7 @@ const updateInvoice = async (req, res) => {
     const { id } = req.params;
     const updates = req.body;
     let updatedInvoice = null;
+  
     if (getIsConnected()) {
       updatedInvoice = await Invoice.findOneAndUpdate({ id }, updates, { new: true });
     }
@@ -268,7 +257,7 @@ const updateInvoice = async (req, res) => {
   }
 };
 
-// 5. DELETE:
+//  DELETE
 const deleteInvoice = async (req, res) => {
   try {
     const { id } = req.params;

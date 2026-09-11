@@ -9,7 +9,7 @@ import EditInvoiceModal from '../../components/EditInvoiceModal/EditInvoiceModal
 import { updateInvoice, deleteInvoice } from '../../services/api';
 import './Invoices.scss';
 
-// Helper to reliably parse date strings into Date objects
+// Helping  to to parse date strings into Date objects reliably
 const parseDate = (dateStr) => {
   if (!dateStr) return null;
   const d = new Date(dateStr);

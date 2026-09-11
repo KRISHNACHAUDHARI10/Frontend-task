@@ -11,6 +11,7 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
   const [status, setStatus] = useState('Pending');
   const [items, setItems] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [errors, setErrors] = useState({ clientName: '', items: [] });
 
   useEffect(() => {
     if (invoice) {
@@ -27,6 +28,7 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
             }))
           : [{ name: 'Service', qty: 1, price: invoice.amount || 0 }]
       );
+      setErrors({ clientName: '', items: [] });
     }
   }, [invoice]);
 
@@ -44,20 +46,65 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
       next[index] = { ...next[index], [field]: value };
       return next;
     });
+    setErrors((prev) => {
+      const nextItems = [...(prev.items || [])];
+      if (nextItems[index]) {
+        nextItems[index] = { ...nextItems[index], [field]: '' };
+      }
+      return { ...prev, items: nextItems };
+    });
   };
 
   const handleAddItem = () => {
     setItems((prev) => [...prev, { name: '', qty: 1, price: '' }]);
+    setErrors((prev) => ({
+      ...prev,
+      items: [...(prev.items || []), { name: '', qty: '', price: '' }],
+    }));
   };
 
   const handleRemoveItem = (index) => {
     if (items.length <= 1) return;
     setItems((prev) => prev.filter((_, i) => i !== index));
+    setErrors((prev) => ({
+      ...prev,
+      items: (prev.items || []).filter((_, i) => i !== index),
+    }));
+  };
+
+  const validateForm = () => {
+    const nextErrors = { clientName: '', items: [] };
+    let isValid = true;
+
+    if (!clientName.trim()) {
+      nextErrors.clientName = 'Client name is required';
+      isValid = false;
+    }
+
+    items.forEach((item) => {
+      const itemErrors = { name: '', qty: '', price: '' };
+      if (!String(item.name || '').trim()) {
+        itemErrors.name = 'Item name is required';
+        isValid = false;
+      }
+      if (item.qty === '' || item.qty === null || Number(item.qty) < 1) {
+        itemErrors.qty = 'Qty is required';
+        isValid = false;
+      }
+      if (item.price === '' || item.price === null || Number(item.price) <= 0) {
+        itemErrors.price = 'Price is required';
+        isValid = false;
+      }
+      nextErrors.items.push(itemErrors);
+    });
+
+    setErrors(nextErrors);
+    return isValid;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!clientName.trim() || totalAmount <= 0) return;
+    if (!validateForm()) return;
 
     setSaving(true);
     const sanitizedItems = items.map((item) => ({
@@ -93,7 +140,7 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
           </div>
           <button type="button" className="modal-close-btn" onClick={onClose}>
             <CloseIcon sx={{ fontSize: 20 }} />
-          </button>
+          </button> 
         </div>
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginTop: '16px' }}>
@@ -102,10 +149,16 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
               <label>Client Name *</label>
               <input
                 type="text"
-                required
                 value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
+                className={errors.clientName ? 'input-error' : ''}
+                onChange={(e) => {
+                  setClientName(e.target.value);
+                  if (errors.clientName) {
+                    setErrors((prev) => ({ ...prev, clientName: '' }));
+                  }
+                }}
               />
+              {errors.clientName && <span className="field-error">{errors.clientName}</span>}
             </div>
             <div className="filter-group">
               <label>Client Email</label>
@@ -151,47 +204,58 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '220px', overflowY: 'auto' }}>
-              {items.map((item, idx) => (
+              {items.map((item, idx) => {
+                const itemErrors = errors.items[idx] || {};
+                return (
                 <div
                   key={idx}
                   style={{
                     display: 'grid',
                     gridTemplateColumns: '2fr 70px 100px 80px 30px',
                     gap: '8px',
-                    alignItems: 'center',
+                    alignItems: 'start',
                     background: '#f8fafc',
                     padding: '8px',
                     borderRadius: '6px',
                     border: '1px solid #e2e8f0',
                   }}
                 >
-                  <input
-                    type="text"
-                    required
-                    placeholder="Description"
-                    value={item.name}
-                    onChange={(e) => handleItemChange(idx, 'name', e.target.value)}
-                    style={{ padding: '6px 8px', fontSize: '0.82rem', border: '1px solid #cbd5e1', borderRadius: '4px' }}
-                  />
-                  <input
-                    type="number"
-                    required
-                    min="1"
-                    placeholder="Qty"
-                    value={item.qty}
-                    onChange={(e) => handleItemChange(idx, 'qty', e.target.value)}
-                    style={{ padding: '6px 8px', fontSize: '0.82rem', border: '1px solid #cbd5e1', borderRadius: '4px' }}
-                  />
-                  <input
-                    type="number"
-                    required
-                    min="0"
-                    placeholder="Price"
-                    value={item.price}
-                    onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
-                    style={{ padding: '6px 8px', fontSize: '0.82rem', border: '1px solid #cbd5e1', borderRadius: '4px' }}
-                  />
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#334155', textAlign: 'right' }}>
+                  <div className="filter-group">
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      value={item.name}
+                      className={itemErrors.name ? 'input-error' : ''}
+                      onChange={(e) => handleItemChange(idx, 'name', e.target.value)}
+                      style={{ padding: '6px 8px', fontSize: '0.82rem', borderRadius: '4px' }}
+                    />
+                    {itemErrors.name && <span className="field-error">{itemErrors.name}</span>}
+                  </div>
+                  <div className="filter-group">
+                    <input
+                      type="number"
+                      min="1"
+                      placeholder="Qty"
+                      value={item.qty}
+                      className={itemErrors.qty ? 'input-error' : ''}
+                      onChange={(e) => handleItemChange(idx, 'qty', e.target.value)}
+                      style={{ padding: '6px 8px', fontSize: '0.82rem', borderRadius: '4px' }}
+                    />
+                    {itemErrors.qty && <span className="field-error">{itemErrors.qty}</span>}
+                  </div>
+                  <div className="filter-group">
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="Price"
+                      value={item.price}
+                      className={itemErrors.price ? 'input-error' : ''}
+                      onChange={(e) => handleItemChange(idx, 'price', e.target.value)}
+                      style={{ padding: '6px 8px', fontSize: '0.82rem', borderRadius: '4px' }}
+                    />
+                    {itemErrors.price && <span className="field-error">{itemErrors.price}</span>}
+                  </div>
+                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#334155', textAlign: 'right', paddingTop: '8px' }}>
                     ₹{((Number(item.qty) || 0) * (Number(item.price) || 0)).toLocaleString()}
                   </span>
                   <button
@@ -206,12 +270,14 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
                       padding: '2px',
                       display: 'flex',
                       alignItems: 'center',
+                      marginTop: '6px',
                     }}
                   >
                     <DeleteIcon sx={{ fontSize: 18 }} />
                   </button>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -237,7 +303,7 @@ const EditInvoiceModal = ({ invoice, isOpen, onClose, onSave }) => {
             <button type="button" onClick={onClose} className="btn btn-secondary">
               Cancel
             </button>
-            <button type="submit" disabled={saving || totalAmount <= 0} className="btn btn-primary">
+            <button type="submit" disabled={saving} className="btn btn-primary">
               {saving ? 'Updating...' : 'Save Changes'}
             </button>
           </div>

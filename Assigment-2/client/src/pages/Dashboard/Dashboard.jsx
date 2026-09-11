@@ -4,14 +4,14 @@ import './Dashboard.scss';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const Dashboard = ({ invoices }) => {
-  // 1. Total invoices count
+  //  Total invoices count
   const totalInvoices = invoices.length;
   
-  // 2. Paid invoices count
+  //  Paid invoices count
   const paidInvoices = invoices.filter((inv) => inv.status === 'Paid').length;
-  // 3. Overdue invoices count
+  //  Overdue invoices count
   const overdueInvoices = invoices.filter((inv) => inv.status === 'Overdue').length;
-  // 4. Pending amount total 
+  //  Pending amount total 
   let pendingAmount = 0;
   invoices.forEach((inv) => {
     if (inv.status === 'Pending') {

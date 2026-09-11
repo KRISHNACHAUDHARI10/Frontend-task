@@ -28,12 +28,12 @@ function App() {
       });
   }, []);
 
-  // CREATE: Append newly created invoice
+  // CREATE: e
   const handleAddInvoice = (newInvoice) => {
     setInvoices((prev) => [newInvoice, ...prev]);
   };
 
-  // UPDATE: Mark as paid via api service
+  // UPDATE: Mark as paid 
   const handleMarkPaid = async (id) => {
     try {
       await updateInvoice(id, { status: 'Paid' });

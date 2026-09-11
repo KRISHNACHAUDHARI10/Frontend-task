@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-// Direct MongoDB Compass URI (No .env file used)
+// MongoDB Compass URI  connection string
 const MONGO_URI = 'mongodb://127.0.0.1:27017/invoices_db';
 
 let isConnected = false;

@@ -179,7 +179,19 @@ a {
     border-radius: 4px;
     font-size: 0.85rem;
     outline: none;
+
+    &.input-error {
+      border-color: #ef4444;
+      background-color: #fef2f2;
+    }
   }
+}
+
+.field-error {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #dc2626;
+  margin-top: 2px;
 }
 
 .action-btn {

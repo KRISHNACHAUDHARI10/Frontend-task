@@ -61,7 +61,7 @@ const InvoiceTable = ({
             <th onClick={() => onSort('date')} style={{ cursor: 'pointer' }}>
   
               Date {sortField === 'date' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}
-            </th>
+            </th> 
 
             <th onClick={() => onSort('dueDate')} style={{ cursor: 'pointer' }}>
               Due Date {sortField === 'dueDate' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}

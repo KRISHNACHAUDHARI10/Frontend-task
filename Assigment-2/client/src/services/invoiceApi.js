@@ -1,4 +1,4 @@
-// Sample invoices data in Rupees (₹)
+// this is my initial invoices data
 export const initialInvoices = [
   {
     id: 'INV-101',
