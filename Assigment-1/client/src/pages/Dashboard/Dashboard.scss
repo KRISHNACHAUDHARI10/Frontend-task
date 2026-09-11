@@ -1,0 +1,152 @@
+
+.page {
+  min-height: calc(100vh - 60px);
+  background-color: rgb(248, 250, 252);
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.dashboard-header {
+  margin-bottom: 1.5rem;
+
+  h1 {
+    margin: 0 0 0.4rem;
+    font-size: 1.6rem;
+    color: rgb(15, 23, 42);
+  }
+
+  p {
+    margin: 0;
+    color: rgb(71, 85, 105);
+    font-size: 0.95rem;
+  }
+}
+
+.dashboard-description {
+  background-color: rgb(239, 246, 255);
+ border: 1px solid rgb(191, 219, 254);
+  border-radius: 8px;
+
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.05rem;
+    color: rgb(30, 64, 175);
+  }
+
+  p {
+    margin: 0 0 0.5rem;
+    color: rgb(71, 85, 105);
+    font-size: 0.9rem;
+    line-height: 1.6;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      color: rgb(30, 64, 175);
+    }
+  }
+}
+
+.box {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(226, 232, 240);
+  border-radius: 10px;
+
+  padding: 1.25rem;
+
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+
+  h3 {
+    margin: 0 0 0.5rem;
+    color: rgb(15, 23, 42);
+  }
+}
+
+.box-description {
+  color: rgb(100, 116, 139);
+  font-size: 0.9rem;
+}
+
+.module-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+
+  .module-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.75rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &.enabled {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #1e293b;
+
+      strong {
+        color: #1e40af;
+        font-size: 1.05rem;
+      }
+
+      .perm-tag {
+        font-size: 0.88rem;
+        color: #475569;
+        font-weight: 500;
+      }
+    }
+
+    &.disabled {
+      background-color: #f1f5f9;
+      border: 1px dashed #cbd5e1;
+      opacity: 0.65;
+      color: #94a3b8;
+
+      strong {
+        color: #64748b;
+        font-size: 1.05rem;
+        text-decoration: line-through;
+      }
+
+      .disabled-tag {
+        font-size: 0.85rem;
+        color: #ef4444;
+        font-weight: 600;
+      }
+    }
+
+    .module-title-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .status-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+
+      &.badge-active {
+        background-color: #dcfce7;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+
+      &.badge-disabled {
+        background-color: #fee2e2;
+        color: #dc2626;
+        border: 1px solid #fecaca;
+      }
+    }
+  }
+}

@@ -1,0 +1,905 @@
+/* Clean & Simple CSS */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #f8fafc;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Layout */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-body {
+  display: flex;
+  flex: 1;
+}
+
+/* Navbar */
+.navbar {
+  height: 60px;
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(67, 56, 202, 0.3);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navbar-logo {
+  height: 44px;
+  width: auto;
+  max-width: 120px;
+  object-fit: contain;
+  background: #ffffff;
+  padding: 3px 6px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand h2 {
+  font-size: 1.15rem;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #ffffff;
+}
+
+.role-toggle-btn {
+  padding: 5px 12px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.role-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 200px;
+  background-color: #1e1b4b;
+  border-right: none;
+  padding: 16px 12px;
+  min-height: calc(100vh - 60px);
+}
+
+.sidebar-brand-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  margin-bottom: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+}
+
+.sidebar-brand-card .sidebar-logo {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 2px;
+}
+
+.sidebar-brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-brand-info .brand-title {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+}
+
+.sidebar-brand-info .brand-sub {
+  color: #a5b4fc;
+  font-size: 0.7rem;
+  margin-top: 2px;
+}
+
+.sidebar h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 12px;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin-bottom: 6px;
+}
+
+.sidebar ul li a {
+  display: block;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.sidebar ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sidebar ul li a.active {
+  background-color: rgba(99, 102, 241, 0.4);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+  background-color: #eef2ff;
+}
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header h1 {
+  font-size: 1.6rem;
+  color: #0f172a;
+}
+
+.page-header p {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  border-radius: 8px;
+  padding: 16px;
+  border: none;
+  color: #ffffff;
+}
+
+.stat-card h4 {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-card h2 {
+  font-size: 1.6rem;
+  margin-top: 6px;
+  color: #ffffff;
+}
+
+.total-card {
+  background: #6366f1;
+}
+
+.paid-card {
+  background: #10b981;
+}
+
+.pending-card {
+  background: #f59e0b;
+}
+
+.overdue-card {
+  background: #ef4444;
+}
+
+/* Filters */
+.filters-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.filter-group input,
+.filter-group select {
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+/* Bulk Bar */
+.bulk-bar {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #1e40af;
+  margin-bottom: 14px;
+}
+
+/* Table */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.custom-table th,
+.custom-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.9rem;
+}
+
+.custom-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+}
+
+.custom-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-paid {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.badge-pending {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-overdue {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Buttons */
+.btn {
+  padding: 7px 14px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #4338ca;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #3730a3;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.btn-back,
+.btn-print {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #4338ca;
+  color: #ffffff;
+  padding: 8px 18px;
+  height: 40px;
+  min-width: 210px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(67, 56, 202, 0.25);
+  transition: all 0.2s ease;
+}
+
+.btn-back:hover,
+.btn-print:hover {
+  background-color: #3730a3;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(67, 56, 202, 0.35);
+}
+
+.btn-small {
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  color: #334155;
+  cursor: pointer;
+}
+
+.btn-paid {
+  background-color: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+.btn-delete {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* Modern Action Buttons Toolbar */
+.action-buttons-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  padding: 3px 6px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+/* 1. View Button */
+.action-btn-view {
+  color: #475569;
+}
+.action-btn-view:hover {
+  color: #0f172a;
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* 2. Edit Button */
+.action-btn-edit {
+  color: #2563eb;
+}
+.action-btn-edit:hover {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.12);
+}
+
+/* 3. Mark as Paid Button */
+.action-btn-paid {
+  color: #059669;
+}
+.action-btn-paid:hover {
+  color: #047857;
+  background-color: #ecfdf5;
+  border-color: #a7f3d0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.12);
+}
+
+/* 4. Delete Button */
+.action-btn-delete {
+  color: #e11d48;
+}
+.action-btn-delete:hover {
+  color: #be123c;
+  background-color: #fff1f2;
+  border-color: #fecdd3;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(225, 29, 72, 0.12);
+}
+
+/* Screenshot-Style Actions Dropdown Menu */
+.action-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.action-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.action-dropdown-btn:hover,
+.action-dropdown-btn.active {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.action-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 9999;
+  min-width: 190px;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+  text-align: left;
+  animation: dropdownFadeIn 0.12s ease-out;
+}
+
+/* Upward pointing arrow notch for downward dropdown */
+.action-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 22px;
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-top: 1px solid #d1d5db;
+  border-left: 1px solid #d1d5db;
+  transform: rotate(45deg);
+  z-index: 10;
+}
+
+/* Upward opening menu for bottom rows */
+.action-dropdown-menu.drop-up {
+  top: auto;
+  bottom: calc(100% + 8px);
+  animation: dropUpFadeIn 0.12s ease-out;
+}
+
+.action-dropdown-menu.drop-up::before {
+  top: auto;
+  bottom: -6px;
+  border-top: none;
+  border-left: none;
+  border-bottom: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+}
+
+.action-dropdown-menu.drop-up .dropdown-submenu {
+  top: auto;
+  bottom: -4px;
+}
+
+.action-dropdown-menu.drop-up .dropdown-submenu::before {
+  top: auto;
+  bottom: 11px;
+}
+
+@keyframes dropUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Category header / Section titles (like EXAMPLE in screenshot) */
+.dropdown-section-title {
+  padding: 6px 16px 4px 16px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8a9ba8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Dropdown menu items */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #2c3e50;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-sizing: border-box;
+  transition: background-color 0.12s, color 0.12s;
+  position: relative;
+  text-align: left;
+}
+
+.dropdown-item svg {
+  color: #2c3e50;
+  transition: color 0.12s;
+  flex-shrink: 0;
+}
+
+/* Screenshot exact active / hover blue highlight */
+.dropdown-item:hover,
+.dropdown-item.active {
+  background-color: #0284c7 !important;
+  color: #ffffff !important;
+}
+
+.dropdown-item:hover svg,
+.dropdown-item.active svg {
+  color: #ffffff !important;
+}
+
+/* Submenu layout */
+.dropdown-item.has-submenu {
+  justify-content: space-between;
+}
+
+.dropdown-item.has-submenu .submenu-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown-submenu {
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: 100%;
+  left: auto;
+  margin-right: 6px;
+  margin-left: 0;
+  min-width: 145px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.22), 0 4px 10px rgba(0, 0, 0, 0.08);
+  padding: 6px 0;
+  z-index: 999999;
+}
+
+.dropdown-submenu::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: -5px;
+  left: auto;
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  border-top: 1px solid #cbd5e1;
+  border-right: 1px solid #cbd5e1;
+  border-left: none;
+  border-bottom: none;
+  transform: rotate(45deg);
+  z-index: 10;
+}
+
+.dropdown-item.has-submenu:hover .dropdown-submenu {
+  display: block;
+}
+
+.dropdown-submenu .dropdown-item {
+  padding: 8px 14px;
+  font-size: 0.84rem;
+  color: #2c3e50;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  text-align: left;
+  width: 100%;
+}
+
+/* Status indicators inside submenu */
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.dot-paid {
+  background-color: #10b981;
+}
+
+.dot-pending {
+  background-color: #f59e0b;
+}
+
+.dot-overdue {
+  background-color: #ef4444;
+}
+
+.status-check {
+  margin-left: auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #059669;
+}
+
+.dropdown-item:hover .status-check {
+  color: #ffffff !important;
+}
+
+.dropdown-item.active-status {
+  font-weight: 600;
+}
+
+/* Divider line */
+.dropdown-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 6px 0;
+}
+
+/* Danger item hover */
+.dropdown-item.danger:hover {
+  background-color: #e11d48 !important;
+  color: #ffffff !important;
+}
+
+.dropdown-item.danger:hover svg {
+  color: #ffffff !important;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal Overlay & Card */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 16px;
+  animation: fadeIn 0.15s ease-out;
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  max-width: 600px;
+  width: 100%;
+  padding: 24px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.modal-subtitle {
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.modal-close-btn {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.modal-close-btn:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  font-size: 0.85rem;
+  color: #64748b;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pagination-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.btn-page {
+  padding: 5px 12px;
+  border: 1px solid #cbd5e1;
+  background-color: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.15s ease;
+}
+
+.btn-page:hover:not(:disabled) {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+  color: #0f172a;
+}
+
+.btn-page-num.active {
+  background-color: #4338ca;
+  border-color: #4338ca;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-page:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Printable Invoice */
+.invoice-card {
+  padding: 30px;
+}
+
+@media print {
+  .navbar,
+  .sidebar,
+  .no-print {
+    display: none !important;
+  }
+
+  .main-content {
+    padding: 0 !important;
+  }
+
+  .invoice-card {
+    border: none !important;
+  }
+}

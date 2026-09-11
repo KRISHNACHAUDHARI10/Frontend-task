@@ -1,0 +1,251 @@
+.header {
+  height: 64px;
+  background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+  border-bottom: 1px solid #1e40af;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 50;
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    height: 100%;
+    text-decoration: none;
+
+    .app-logo {
+      height: 46px;
+      width: auto;
+      max-width: 140px;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      border: 1.5px solid rgba(255, 255, 255, 0.85);
+      padding: 2px 6px;
+      background-color: #ffffff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .brand-title {
+      color: #ffffff;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+  }
+
+  /* User Circle Avatar (A or B) */
+  .avatar-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 2px 4px;
+    border-radius: 9999px;
+    transition: all 0.2s ease;
+
+    .user-avatar-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 1.25rem;
+      border: 2px solid #ffffff;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+      transition: all 0.2s ease;
+
+      &.avatar-a {
+        background: linear-gradient(135deg, #059669, #10b981);
+      }
+
+      &.avatar-b {
+        background: linear-gradient(135deg, #7c3aed, #a855f7);
+      }
+    }
+
+    &:hover .user-avatar-circle {
+      transform: scale(1.06);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  /* Dropdown Menu Popup */
+  .user-dropdown-menu {
+    position: absolute;
+    top: 54px;
+    right: 0;
+    width: 240px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18), 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: fadeInDown 0.15s ease-out;
+
+    .dropdown-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #f1f5f9;
+
+      .dropdown-avatar-circle {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1.1rem;
+
+        &.avatar-a {
+          background: #10b981;
+        }
+
+        &.avatar-b {
+          background: #8b5cf6;
+        }
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+
+        strong {
+          color: #0f172a;
+          font-size: 0.92rem;
+        }
+
+        small {
+          color: #64748b;
+          font-size: 0.76rem;
+        }
+      }
+    }
+
+    .dropdown-switch-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .switch-btns {
+        display: flex;
+        gap: 0.4rem;
+
+        button {
+          flex: 1;
+          padding: 0.4rem;
+          font-size: 0.78rem;
+          font-weight: 600;
+          border-radius: 6px;
+          border: 1px solid #cbd5e1;
+          background: #f8fafc;
+          color: #334155;
+          cursor: pointer;
+
+          &.active {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            color: #1d4ed8;
+          }
+        }
+      }
+    }
+
+    /* Logout Button inside dropdown */
+    .dropdown-logout-btn {
+      width: 100%;
+      padding: 0.55rem;
+      background: #ef4444;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s ease;
+      margin-top: 0.25rem;
+
+      &:hover {
+        background: #dc2626;
+      }
+    }
+  }
+
+  .btn-sign-in {
+    padding: 0.5rem 1.1rem;
+    font-size: 0.88rem;
+    background-color: #ffffff;
+    color: #1e3a8a;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: #dbeafe;
+    }
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+  .header {
+    padding: 0 1rem;
+
+    .logo-container .brand-title {
+      display: none;
+    }
+
+    .avatar-label {
+      display: none;
+    }
+  }
+}
